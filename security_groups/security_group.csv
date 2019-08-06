@@ -1,0 +1,2 @@
+﻿resource_SG_name,SG_name,network_security_group_container_id,network_security_group_container_name,id (VPN/VCN),location
+test,Test Security Group,Version 1,Version 1,10.68.63.0/24,West US
