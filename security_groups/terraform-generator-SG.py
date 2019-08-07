@@ -5,8 +5,8 @@ import json
 import re  # Regex
 import csv
 
-rules_csv = "./security_group.csv"
-conversions_csv = "./conversions.csv"
+rules_csv = "./csv/security_group.csv"
+conversions_csv = "./csv/conversions.csv"
 
 
 def main():
