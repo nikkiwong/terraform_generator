@@ -54,8 +54,11 @@ def oci_check_protocol_options(security_group_rule_dict):
 
 
 #maps the correct function to corresponding cloud system. I placed this variable here because the functions needs to be declared before you assign them.
+#I didn't write the functions for aws or azure as I don't know how their csv file will look.
 cloud_options = {
     "oci": {"protocol_check": oci_check_protocol_options, "sg_rule_type": "oci_core_network_security_group_security_rule", "conversions": oci_conversions}
+    #"aws" : {"protocol_check": aws_check_protocol_options, "sg_rule_type": "aws_core_network_security_group_security_rule", "conversions": aws_conversions}
+    #"azure" : {"protocol_check": azure_check_protocol_options, "sg_rule_type": "azure_core_network_security_group_security_rule", "conversions": azure_conversions}
 }
         
 
