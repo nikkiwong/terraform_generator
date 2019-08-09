@@ -142,6 +142,7 @@ def tf_conversion(input_value):
 		print(f'INFO: "{input_value}" not in conversion list. Exiting.')
 		exit(1)
 
+
 # Import conversion rules from 'conversions.csv'
 def conversions_csv_to_dict():
 	conversions_dict = {}
@@ -185,6 +186,7 @@ def print_options_dict(d, n=1, k=""):
     if k != "":
         print(f'{"    " * (n)}}}')
 
+
 # Convert Python dictionary into Terraform output
 def dict_to_tf(security_group_rule_dict):
 
@@ -195,8 +197,6 @@ def dict_to_tf(security_group_rule_dict):
     else:
         print(f'ERROR: No output filename and/or cloud type of config entered. Exiting.')
         exit(1)
-
-
 
 	# Make a copy of the file for a backup
 	
