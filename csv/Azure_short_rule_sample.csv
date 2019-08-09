@@ -1,0 +1,2 @@
+﻿protocol,direction,networkd_security_group_name,name,resource_group_name,source_port_range,destingation_port_range,source_address_prefix,destination_address_prefix,access,priority
+TCP,Outbound,OCIPRODSL01,security_group_rule_1,example_resource_test,80,80,*,*,allow,100

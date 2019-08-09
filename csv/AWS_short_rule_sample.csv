@@ -1,0 +1,3 @@
+﻿protocol,type,security_group_id,security_group_rule_name,from_port,to_port,cidr_blocks,prefix_list_ids,Description
+TCP,Ingress,sg-123456,security_group_rule_1,0,65546,10.0.1.0/24,"pl-12c4e678, pl-12c4e677, pl-12c4e670",SSH
+TCP,Ingress,sg-123222,security_group_rule_2,0,65323,,,SSH

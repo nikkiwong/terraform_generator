@@ -6,7 +6,7 @@ import re # Regex
 import csv
 import xlrd
 
-rules_csv = "../csv/OCI_long_rule_sample.csv"
+rules_csv = "../csv/AWS_short_rule_sample.csv"
 conversions_csv = "../csv/conversions.csv"
 
 
@@ -27,7 +27,7 @@ def oci_conversions(security_group_rule_dict):
     # print(security_group_rule_dict)
     return security_group_rule_dict
 
-def oci_check_protocol_options(security_group_rule_dict):
+def oci_check_options(security_group_rule_dict):
     if (security_group_rule_dict["protocol"] == "tcp" or security_group_rule_dict["protocol"] == "udp"):
         if ("ports" in security_group_rule_dict):
             # Extract port min and port max from ports
@@ -52,13 +52,32 @@ def oci_check_protocol_options(security_group_rule_dict):
     # print()
     return security_group_rule_dict
 
+def aws_check_options(security_group_rule_dict):
+    for field in cloud_options["aws"]["list_items"]:
+        if(field in security_group_rule_dict):
+            security_group_rule_dict[field] = ([x.strip() for x in security_group_rule_dict[field].split(',')])
+            # print(item_list)
+    return security_group_rule_dict
 
 #maps the correct function to corresponding cloud system. I placed this variable here because the functions needs to be declared before you assign them.
 #I didn't write the functions for aws or azure as I don't know how their csv file will look.
 cloud_options = {
-    "oci": {"protocol_check": oci_check_protocol_options, "sg_rule_type": "oci_core_network_security_group_security_rule", "conversions": oci_conversions}
-    #"aws" : {"protocol_check": aws_check_protocol_options, "sg_rule_type": "aws_core_network_security_group_security_rule", "conversions": aws_conversions}
-    #"azure" : {"protocol_check": azure_check_protocol_options, "sg_rule_type": "azure_core_network_security_group_security_rule", "conversions": azure_conversions}
+    "oci": {
+        "check_options": oci_check_options, 
+        "sg_rule_type": "oci_core_network_security_group_security_rule", 
+        "conversions": oci_conversions
+        },
+    "aws" : {
+        "check_options": aws_check_options, #not sure if you need this so I have temporarily made this into a string so doesn't throw error!
+        "sg_rule_type": "aws_security_group_rule", 
+        "list_items": ["prefix_list_ids", "cidr_blocks"],
+        "conversions": "aws_conversions" #not sure if you need this so I have temporarily made this into a string so doesn't throw error!
+        }, 
+    "azure" : {
+        "check_options": "azure_check_options",  #not sure if you need this so I have temporarily made this into a string so doesn't throw error!
+        "sg_rule_type": "azurerm_network_security_rule", 
+        "conversions": "azure_conversions"     #not sure if you need this so I have temporarily made this into a string so doesn't throw error!
+        }
 }
         
 
@@ -70,17 +89,20 @@ def csv_to_dict():
     field_names, rows = import_rules_csv()
 
     #dynamically calls the correct cloud specific check protocol options function
-    check_protocol = cloud_options[sys.argv[2]]["protocol_check"]
+    check_options = cloud_options[sys.argv[2]]["check_options"]
 
     # Create security lists
     for row in rows:
         security_group_name, security_group_rule_name, security_group_rule_dict = parse_row(field_names, row, security_group_name)
 
-        security_group_rule_dict = check_protocol(security_group_rule_dict)
+        if(sys.argv[2].lower()=="oci"):
+            #dynamically calls the correct cloud specific functions
+            security_group_rule_dict = check_options(security_group_rule_dict)
+            value_conversions = cloud_options[sys.argv[2]]["conversions"]
+            security_group_rule_dict = value_conversions(security_group_rule_dict)
 
-        #dynamically calls the correct cloud specific conversion function
-        value_conversions = cloud_options[sys.argv[2]]["conversions"]
-        security_group_rule_dict = value_conversions(security_group_rule_dict)
+        if(sys.argv[2].lower()=="aws"):
+            security_group_rule_dict = check_options(security_group_rule_dict)
 
         rules_dict[security_group_rule_name] = security_group_rule_dict 
 
@@ -215,6 +237,12 @@ def dict_to_tf(security_group_rule_dict):
             if isinstance(security_group_rule_dict[security_group_rule][rule], dict):
                 print(f'    {rule} = {{')
                 print_options_dict(security_group_rule_dict[security_group_rule][rule])
+            if type(security_group_rule_dict[security_group_rule][rule]) is list:
+                item_list = "[ "
+                for item in security_group_rule_dict[security_group_rule][rule]:
+                    item_list += '"' + item + '", '
+                item_list += "]"
+                print(f'    {rule} = {item_list}')
             else:    
                 print(f'    {rule} = "{security_group_rule_dict[security_group_rule][rule]}"')
         print('}') # Close resource
