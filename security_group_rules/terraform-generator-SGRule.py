@@ -6,7 +6,6 @@ import re # Regex
 import csv
 import xlrd
 
-rules_csv = "../csv/AWS_short_rule_sample.csv"
 conversions_csv = "../csv/conversions.csv"
 
 
@@ -182,18 +181,24 @@ def import_rules_csv():
     field_names=[]
     csv_rows = []
     
-    with open(rules_csv) as csv_file:
-        read_csv = csv.reader(csv_file, delimiter=',')
-        for row in read_csv:
-            if("protocol" in row[0]):
-                row[0] = "protocol"
-                field_names = row
-            elif("protocol" not in row[0] and row[0] != ""):
-                csv_rows.append(row)
-            #else:
-                #print("You are missing required fields for {row[3]}.)
-                #print(Exiting...")
-                #exit(1)
+    if(3 in sys.argv or sys.argv[3]!=""):
+        rules_csv = f"../csv/{sys.argv[3]}"
+        with open(rules_csv) as csv_file:
+            read_csv = csv.reader(csv_file, delimiter=',')
+            for row in read_csv:
+                if("protocol" in row[0]):
+                    row[0] = "protocol"
+                    field_names = row
+                elif("protocol" not in row[0] and row[0] != ""):
+                    csv_rows.append(row)
+                #else:
+                    #print("You are missing required fields for {row[3]}.)
+                    #print(Exiting...")
+                    #exit(1)
+    else:
+        print(f'ERROR: No CSV file name for rules was entered in as the 3rd parameter.')
+        print('Exiting.')
+        exit(1)
 
     return field_names, csv_rows
 
