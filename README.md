@@ -6,13 +6,13 @@ First argument after the python filename is the terraform filename (whatever you
 
 Make sure you are in the folder of the python file you wish to run!
 
-#currently only supports aws, azure and oci cloud types
-
+#currently security_groups script only supports aws, azure and oci cloud types
 Example of using the security group generator
 <br/> python3 terraform-generator-SG.py "OCI_terraform_SG_file.tf" oci
 <br/> python3 terraform-generator-SG.py "AWS_terraform_SG_file.tf" aws
 <br/> python3 terraform-generator-SG.py "AZURE_terraform_SG_file.tf" azure
 
+#currently security_groups_rules script only supports oci cloud types
 Example of using the security group rule generator
 <br/> python3 terraform-generator-SGRule.py "OCI_terraform_SGRULE_file.tf" oci
 <br/> python3 terraform-generator-SGRule.py "AWS_terraform_SGRULE_file.tf" aws

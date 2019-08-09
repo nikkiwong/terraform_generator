@@ -6,7 +6,7 @@ import re # Regex
 import csv
 import xlrd
 
-rules_csv = "../csv/short_rule_sample.csv"
+rules_csv = "../csv/OCI_long_rule_sample.csv"
 conversions_csv = "../csv/conversions.csv"
 
 
