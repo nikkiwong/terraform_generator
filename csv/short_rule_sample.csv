@@ -1,0 +1,37 @@
+﻿protocol,direction,security_group_name,security_group_rule_name,Source,Destination ,Ports,ICMP_type,Description
+TCP,Ingress,OCIPRODSL01,security_group_rule_1,VCN,-,22,,SSH
+TCP,Ingress,,security_group_rule_2,VCN,-,,,
+UDP,Ingress,,security_group_rule_3,VCN,-,111,,
+TCP,Ingress,,security_group_rule_4,VCN,-,443,,HTTPS
+TCP,Ingress,,security_group_rule_5,VCN,-,2048-2050,,
+UDP,Ingress,,security_group_rule_6,VCN,-,2048,,
+TCP,Ingress,,security_group_rule_7,Version 1,-,22,,SSH
+TCP,Ingress,,security_group_rule_8,Version 1,-,8443,,HTTPS
+TCP,Ingress,,security_group_rule_9,Version 1 (AL),-,,,SSH
+TCP,Ingress,,security_group_rule_10,Version 1 (SR),-,,,SSH
+TCP,Ingress,,security_group_rule_11,Version 1 (MM),-,22,,SSH
+TCP,Ingress,,security_group_rule_12,Version 1 (DT),-,22,,SSH
+TCP,Ingress,,security_group_rule_13,Version 1 (AN),-,,,SSH
+UDP,Ingress,,security_group_rule_14,Version 1 (Belfast),-,,,SSH
+TCP,Ingress,,security_group_rule_15,Version 1 (India),-,22,,SSH
+TCP,Ingress,,security_group_rule_16,Version 1 (CA),-,22,,SSH
+TCP,Ingress,,security_group_rule_17,Version 1 (CS),-,22,,SSH
+TCP,Ingress,,security_group_rule_18,Wood On-Premise,-,22,,SSH
+TCP,Ingress,,security_group_rule_19,Wood On-Premise,-,443,,SSH
+TCP,Ingress,,security_group_rule_20,Wood On-Premise,-,8443,,HTTPS
+TCP,Ingress,,security_group_rule_21,Wood On-Premise,-,7000-7099,,HTTP/HTTPS WL
+ICMP,Ingress,,security_group_rule_22,Wood On-Premise,-,-,-,
+TCP,Ingress,,security_group_rule_23,Prod Application Subnet,-,443,,HTTPS
+TCP,Ingress,,security_group_rule_24,Prod Database Subnet,-,443,,HTTPS
+TCP,Ingress,,security_group_rule_25,Prod Load Balancer Subnet,-,8081,,
+TCP,Ingress,,security_group_rule_26,DR Load Balancer Subnet,-,8081,,
+TCP,Ingress,,security_group_rule_27,DevSit Application Subnet,-,443,,HTTPS
+TCP,Ingress,,security_group_rule_28,DevSit Database Subnet,-,443,,HTTPS
+TCP,Ingress,,security_group_rule_29,Wood Office,-,22,,SSH
+ICMP,Ingress,,security_group_rule_30,Wood External VPN,-,-,4,
+TCP,Ingress,,security_group_rule_31,Wood External VPN,-,443,,
+TCP,Ingress,,security_group_rule_32,Wood External VPN,-,80,,
+TCP,Ingress,,security_group_rule_33,Wood External VPN,-,1521-1599,,
+TCP,Ingress,,security_group_rule_34,Wood External VPN,-,22,,
+TCP,Ingress,,security_group_rule_35,12.222.235.130/32,-,22,,
+-,Egress,,security_group_rule_36,-,0.0.0.0/0,-,,

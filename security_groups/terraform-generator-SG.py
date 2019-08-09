@@ -5,8 +5,8 @@ import json
 import re  # Regex
 import csv
 
-rules_csv = "./csv/security_group.csv"
-conversions_csv = "./csv/conversions.csv"
+security_group_csv = "../csv/security_group.csv"
+conversions_csv = "../csv/conversions.csv"
 
 
 def main():
@@ -131,11 +131,10 @@ def conversions_csv_to_dict():
 def import_security_group_csv():
 	csv_rows = []
 
-
-	with open(rules_csv) as csv_file:
+	with open(security_group_csv) as csv_file:
 		read_csv = csv.reader(csv_file, delimiter=',')
 		for row in read_csv:
-			if("resource_SG_name" not in row[0]):
+			if("resource_SG_name" not in row[0]): #"resource_SG_name will need to be changed if you're changing it to something else in the CSV file"
 				csv_rows.append(row)
 
 	return csv_rows
